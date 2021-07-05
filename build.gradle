@@ -1,0 +1,57 @@
+plugins {
+    // https://plugins.gradle.org/plugin/org.springframework.boot
+    // id 'org.springframework.boot' version '2.5.2' apply false
+    id 'org.springframework.boot' version '2.5.0' apply false
+    // https://plugins.gradle.org/plugin/io.spring.dependency-management
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    compileJava.options.encoding = 'UTF-8'
+    compileTestJava.options.encoding = 'UTF-8'
+
+    group = 'org.dreamcat.ericadb'
+    version = '0.1.0'
+    sourceCompatibility = '11'
+
+    ext {
+        // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+        // slf4jVersion = "1.7.31"
+        slf4jVersion = "1.7.30"
+        // https://mvnrepository.com/artifact/org.projectlombok/lombok
+        lombokVersion = "1.18.20"
+        // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+        junitVersion = "5.7.2"
+    }
+
+    dependencies {
+        implementation "org.slf4j:slf4j-api:$slf4jVersion"
+        compileOnly "org.projectlombok:lombok:$lombokVersion"
+        annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+        testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+        testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+        implementation "org.dreamcat:common-core:$COMMON_VERSION"
+
+    }
+
+    task printVersion {
+        doLast {
+            print version
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+

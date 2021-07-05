@@ -1,0 +1,17 @@
+rootProject.name = 'ericadb'
+
+def projects = [
+        // EricaDB's first milestone
+        'ericadb1:ericadb1-common',
+        'ericadb1:ericadb1-server',
+        'ericadb1:ericadb1-jdbc',
+        // EricaDB's second milestone
+        'ericadb2:ericadb2-common',
+        'ericadb2:ericadb2-server',
+        'ericadb2:ericadb2-jdbc',
+]
+
+projects.forEach {
+    include it
+}
+
