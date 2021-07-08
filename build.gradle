@@ -1,7 +1,6 @@
 plugins {
     // https://plugins.gradle.org/plugin/org.springframework.boot
-    // id 'org.springframework.boot' version '2.5.2' apply false
-    id 'org.springframework.boot' version '2.5.0' apply false
+    id 'org.springframework.boot' version '2.5.2' apply false
     // https://plugins.gradle.org/plugin/io.spring.dependency-management
     id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
 }
@@ -18,30 +17,33 @@ subprojects {
     compileJava.options.encoding = 'UTF-8'
     compileTestJava.options.encoding = 'UTF-8'
 
-    group = 'org.dreamcat.ericadb'
+    group = 'org.dreamcat'
     version = '0.1.0'
-    sourceCompatibility = '11'
+    sourceCompatibility = '8'
 
     ext {
         // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-        // slf4jVersion = "1.7.31"
-        slf4jVersion = "1.7.30"
+        slf4jVersion = "1.7.31"
         // https://mvnrepository.com/artifact/org.projectlombok/lombok
         lombokVersion = "1.18.20"
         // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
         junitVersion = "5.7.2"
+        // https://mvnrepository.com/artifact/ch.qos.logback/logback-core
+        logbackVersion = '1.2.3'
     }
 
     dependencies {
         implementation "org.slf4j:slf4j-api:$slf4jVersion"
+        runtimeOnly "ch.qos.logback:logback-classic:$logbackVersion"
+        testRuntimeOnly "ch.qos.logback:logback-classic:$logbackVersion"
         compileOnly "org.projectlombok:lombok:$lombokVersion"
         annotationProcessor "org.projectlombok:lombok:$lombokVersion"
         testCompileOnly "org.projectlombok:lombok:$lombokVersion"
         testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
         testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
-        implementation "org.dreamcat:common-core:$COMMON_VERSION"
 
+        implementation "org.dreamcat:common-core:$COMMON_VERSION"
     }
 
     task printVersion {

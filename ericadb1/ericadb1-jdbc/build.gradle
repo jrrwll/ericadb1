@@ -1,9 +1,0 @@
-ext {
-    logbackVersion = '1.2.3'
-}
-
-dependencies {
-    implementation project(':ericadb1:ericadb1-common')
-
-    implementation "ch.qos.logback:logback-core:$logbackVersion"
-}

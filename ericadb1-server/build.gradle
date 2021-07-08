@@ -1,0 +1,5 @@
+dependencies {
+    implementation project(':ericadb1-common')
+
+    implementation "org.dreamcat:common-x:$COMMON_VERSION"
+}
