@@ -61,7 +61,7 @@ public final class SqlAnalyzers {
     public static String getKeywordOrString(LexToken token, List<LexToken> tokens, int index) {
         if (token.isKeyword()) {
             return token.getKeyword();
-        } else if (token.isLiteralString()) {
+        } else if (token.isString()) {
             return token.getString();
         } else {
             return throwWrongSyntax(tokens, index);
@@ -70,9 +70,17 @@ public final class SqlAnalyzers {
 
     static {
         analyzers = Arrays.asList(
+                // ddl
                 new CreateDatabaseSqlAnalyzer(),
                 new DropDatabaseSqlAnalyzer(),
-                new CreateTableSqlAnalyzer()
+                new CreateTableSqlAnalyzer(),
+                new DropTableSqlAnalyzer(),
+                // dml
+                new InsertIntoSqlAnalyzer(),
+                new UpdateSetSqlAnalyzer(),
+                new DeleteFromSqlAnalyzer(),
+                // query
+                new SelectFromSqlAnalyzer()
         );
     }
 }

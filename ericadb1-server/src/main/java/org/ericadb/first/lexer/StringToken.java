@@ -1,6 +1,8 @@
 package org.ericadb.first.lexer;
 
 import org.dreamcat.common.util.StringUtil;
+import org.ericadb.first.common.result.ResultObject;
+import org.ericadb.first.common.result.TextResultObject;
 
 /**
  * @author Jerry Will
@@ -16,12 +18,22 @@ public class StringToken extends AbsLexToken {
     }
 
     @Override
-    public boolean isLiteralString() {
+    public boolean isString() {
         return true;
     }
 
     @Override
     public String getString() {
         return value;
+    }
+
+    @Override
+    public boolean isValue() {
+        return true;
+    }
+
+    @Override
+    public ResultObject getValue() {
+        return new TextResultObject(value);
     }
 }

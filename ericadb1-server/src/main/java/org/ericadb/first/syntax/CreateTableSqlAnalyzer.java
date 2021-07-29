@@ -40,7 +40,6 @@ public class CreateTableSqlAnalyzer implements SqlAnalyzer {
     @Override
     public SqlObject analyse(LexTokens lexTokens) {
         List<LexToken> tokens = lexTokens.getTokens();
-
         int size = tokens.size();
         // note that only size >= 7 is supported
         if (size < 7) return null;
@@ -53,25 +52,22 @@ public class CreateTableSqlAnalyzer implements SqlAnalyzer {
         String token2 = tokens.get(1).getKeyword();
         int offset;
         CreateTableSqlObject sqlObject = new CreateTableSqlObject(lexTokens.getSql());
-        boolean orReplace = false, ifNotExists = false;
         if (KeywordToken.TABLE.equals(token2)) {
-            offset = analyseBetweenDot(sqlObject, tokens, 3);
+            offset = sqlObject.analyseBetweenDot(tokens, 3);
         } else if (KeywordToken.OR.equals(token2) && size >= 9
                 && KeywordToken.REPLACE.equals(tokens.get(2).getKeyword())
                 && KeywordToken.TABLE.equals(tokens.get(3).getKeyword())) {
-            offset = analyseBetweenDot(sqlObject, tokens, 5);
-            orReplace = true;
+            offset = sqlObject.analyseBetweenDot(tokens, 5);
+            sqlObject.setOrReplace(true);
         } else if (KeywordToken.IF.equals(token2) && size >= 10
                 && KeywordToken.NOT.equals(tokens.get(2).getKeyword())
                 && KeywordToken.EXISTS.equals(tokens.get(3).getKeyword())
                 && KeywordToken.TABLE.equals(tokens.get(4).getKeyword())) {
-            offset = analyseBetweenDot(sqlObject, tokens, 6);
-            ifNotExists = true;
+            offset = sqlObject.analyseBetweenDot(tokens, 6);
+            sqlObject.setIfNotExists(true);
         } else {
             return null;
         }
-        sqlObject.setOrReplace(orReplace);
-        sqlObject.setIfNotExists(ifNotExists);
 
         // add columns
         offset = this.analyseColumns(sqlObject, tokens, offset);
@@ -79,17 +75,6 @@ public class CreateTableSqlAnalyzer implements SqlAnalyzer {
             throwWrongSyntax(tokens, offset);
         }
         return sqlObject;
-    }
-
-    private int analyseBetweenDot(CreateTableSqlObject sqlObject, List<LexToken> tokens, int dotIndex) {
-        if (PunctuationToken.DOT.equals(tokens.get(dotIndex))) {
-            sqlObject.setDatabaseName(getKeywordOrString(tokens, dotIndex - 1));
-            sqlObject.setTableName(getKeywordOrString(tokens, dotIndex + 1));
-            return dotIndex + 2;
-        } else {
-            sqlObject.setTableName(getKeywordOrString(tokens, dotIndex - 1));
-            return dotIndex;
-        }
     }
 
     private int analyseColumns(CreateTableSqlObject sqlObject, List<LexToken> tokens, int offset) {
@@ -134,13 +119,13 @@ public class CreateTableSqlAnalyzer implements SqlAnalyzer {
                     }
                 } else if (KeywordToken.DEFAULT.equals(k3)) {
                     LexToken token4 = getToken(tokens, ++offset);
-                    if (token4.isLiteralString()) {
+                    if (token4.isString()) {
                         columnDefinition.setDefaultValue(
                                 new TextResultObject(token4.getString()));
-                    } else if (token4.isLiteralInteger()) {
+                    } else if (token4.isInteger()) {
                         columnDefinition.setDefaultValue(
                                 new Int64ResultObject(token4.getInteger()));
-                    } else if (token4.isLiteralFloat()) {
+                    } else if (token4.isFloat()) {
                         columnDefinition.setDefaultValue(
                                 new Float64ResultObject(token4.getFloat()));
                     }

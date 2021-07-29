@@ -1,5 +1,7 @@
 package org.ericadb.first.lexer;
 
+import org.ericadb.first.common.result.ResultObject;
+
 /**
  * @author Jerry Will
  * @since 2021-07-03
@@ -18,7 +20,7 @@ public interface LexToken {
         return null;
     }
 
-    default boolean isLiteralString() {
+    default boolean isString() {
         return false;
     }
 
@@ -26,7 +28,7 @@ public interface LexToken {
         return null;
     }
 
-    default boolean isLiteralInteger() {
+    default boolean isInteger() {
         return false;
     }
 
@@ -34,7 +36,7 @@ public interface LexToken {
         return 0;
     }
 
-    default boolean isLiteralFloat() {
+    default boolean isFloat() {
         return false;
     }
 
@@ -47,6 +49,14 @@ public interface LexToken {
     }
 
     default OperatorToken getOperator() {
+        return null;
+    }
+
+    default boolean isValue() {
+        return false;
+    }
+
+    default ResultObject getValue() {
         return null;
     }
 

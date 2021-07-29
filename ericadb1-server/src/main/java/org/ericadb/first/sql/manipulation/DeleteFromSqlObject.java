@@ -1,32 +1,31 @@
-package org.ericadb.first.sql.query;
+package org.ericadb.first.sql.manipulation;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.ericadb.first.common.result.ResultObjects;
 import org.ericadb.first.context.SqlContext;
 import org.ericadb.first.sql.AbstractSqlObject;
+import org.ericadb.first.sql.query.WhereObject;
 import org.ericadb.first.syntax.aware.DatabaseTableNameAware;
 
 /**
  * @author Jerry Will
- * @since 2021-07-06
+ * @version 2021-07-22
  */
 @Getter
 @Setter
-public class SelectFromSqlObject extends AbstractSqlObject implements DatabaseTableNameAware {
+public class DeleteFromSqlObject extends AbstractSqlObject implements DatabaseTableNameAware {
 
     String databaseName;
     String tableName;
-    int limitSize;
-    int limitOffset;
     WhereObject where;
 
-    public SelectFromSqlObject(String sql) {
+    protected DeleteFromSqlObject(String sql) {
         super(sql);
     }
 
     @Override
     public ResultObjects execute(SqlContext context) {
-        throw new UnsupportedOperationException();
+        return null;
     }
 }

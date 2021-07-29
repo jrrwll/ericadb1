@@ -23,7 +23,7 @@ subprojects {
 
     ext {
         // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-        slf4jVersion = "1.7.31"
+        slf4jVersion = "1.7.32"
         // https://mvnrepository.com/artifact/org.projectlombok/lombok
         lombokVersion = "1.18.20"
         // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
@@ -44,6 +44,7 @@ subprojects {
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 
         implementation "org.dreamcat:common-core:$COMMON_VERSION"
+        // implementation "org.dreamcat:round-el:$COMMON_VERSION"
     }
 
     task printVersion {

@@ -26,7 +26,6 @@ public class CreateDatabaseSqlAnalyzer implements SqlAnalyzer {
     @Override
     public SqlObject analyse(LexTokens lexTokens) {
         List<LexToken> tokens = lexTokens.getTokens();
-
         int size = tokens.size();
         // note that only size = {3, 5, 6} is supported just for now
         if (size > 6 || size == 4 || size < 3) return null;

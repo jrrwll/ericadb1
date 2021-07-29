@@ -39,4 +39,6 @@ public interface ResultObject {
     };
 
     ExpFunction<InputStream, ResultObject, IOException> NULL_READER = it -> NULL;
+
+    ResultObject[] EMPTY_ARRAY = new ResultObject[0];
 }

@@ -10,6 +10,7 @@ import org.ericadb.first.context.SqlContext;
 import org.ericadb.first.sql.AbstractSqlObject;
 import org.ericadb.first.store.DatabaseEngine;
 import org.ericadb.first.store.StorageEngineManager;
+import org.ericadb.first.syntax.aware.DatabaseTableNameAware;
 
 /**
  * @author Jerry Will
@@ -17,7 +18,7 @@ import org.ericadb.first.store.StorageEngineManager;
  */
 @Getter
 @Setter
-public class CreateTableSqlObject extends AbstractSqlObject {
+public class CreateTableSqlObject extends AbstractSqlObject implements DatabaseTableNameAware {
 
     String databaseName;
     String tableName;

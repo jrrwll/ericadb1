@@ -4,6 +4,10 @@ values (1, 'a');
 insert into jerry
 values (2, 'b');
 
+insert into jerry(id, word)
+values (1, 'a'),
+       (2, 'b');
+
 update jerry
 set word = 'c'
 where id = 1;

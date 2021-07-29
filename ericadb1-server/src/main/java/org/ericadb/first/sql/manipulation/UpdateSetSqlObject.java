@@ -4,41 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+import org.dreamcat.common.Pair;
 import org.ericadb.first.common.result.Int32ResultObject;
 import org.ericadb.first.common.result.ResultObject;
 import org.ericadb.first.common.result.ResultObjects;
 import org.ericadb.first.context.SqlContext;
 import org.ericadb.first.sql.AbstractSqlObject;
+import org.ericadb.first.sql.query.WhereObject;
 import org.ericadb.first.store.StorageEngineManager;
 import org.ericadb.first.store.TableEngine;
-import org.ericadb.first.syntax.aware.DatabaseTableNameAware;
 
 /**
  * @author Jerry Will
- * @since 2021-07-06
+ * @version 2021-07-22
  */
 @Getter
 @Setter
-public class InsertIntoSqlObject extends AbstractSqlObject implements DatabaseTableNameAware {
+public class UpdateSetSqlObject extends AbstractSqlObject {
 
     String databaseName;
     String tableName;
-    // null means all columns
-    List<String> columnNames;
-    // values
-    List<ResultObject[]> values;
+    List<Pair<String, ResultObject>> sets;
+    WhereObject where;
 
-    public InsertIntoSqlObject(String sql) {
+    protected UpdateSetSqlObject(String sql) {
         super(sql);
-        this.columnNames = new ArrayList<>();
-        this.values = new ArrayList<>();
+        this.sets = new ArrayList<>();
     }
 
     @Override
     public ResultObjects execute(SqlContext context) {
         TableEngine tableEngine = StorageEngineManager.getInstance().getTableEngine();
 
-        int rowEffect = tableEngine.insertInto(this, context);
+        int rowEffect = tableEngine.updateSet(this, context);
 
         return ResultObjects.singleton(new Int32ResultObject(rowEffect));
     }

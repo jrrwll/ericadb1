@@ -25,7 +25,6 @@ public class DropDatabaseSqlAnalyzer implements SqlAnalyzer {
     @Override
     public SqlObject analyse(LexTokens lexTokens) {
         List<LexToken> tokens = lexTokens.getTokens();
-
         int size = tokens.size();
         // note that only size = {3, 5} is supported just for now
         if (size != 3 && size != 5) return null;

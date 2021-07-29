@@ -13,7 +13,7 @@ public interface SqlAnalyzer {
      * sql syntax analyse
      *
      * @param lexTokens sql tokens
-     * @return null if not suitable
+     * @return sql object, null if not suitable
      */
     SqlObject analyse(LexTokens lexTokens);
 }

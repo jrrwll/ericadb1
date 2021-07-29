@@ -50,6 +50,9 @@ public class KeywordToken extends AbsLexToken {
     public static final String PRIMARY = "primary";
     public static final String KEY = "key";
     public static final String UNIQUE = "unique";
+    public static final String INSERT = "insert";
+    public static final String INTO = "into";
+    public static final String VALUES = "values";
 
     // type
     public static final String BOOL = "bool";

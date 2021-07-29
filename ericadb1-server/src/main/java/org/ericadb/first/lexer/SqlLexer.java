@@ -3,7 +3,7 @@ package org.ericadb.first.lexer;
 import java.util.ArrayList;
 import java.util.List;
 import org.dreamcat.common.Pair;
-import org.dreamcat.common.text.NumericSearcher;
+import org.dreamcat.common.text.NumberSearcher;
 import org.dreamcat.common.text.StringSearcher;
 import org.dreamcat.common.util.StringUtil;
 
@@ -24,48 +24,50 @@ public class SqlLexer {
 
             // keyword
             if (StringUtil.isFirstVariableChar(c)) {
-                String v = StringSearcher.extractVariable(sql, i);
+                String v = StringSearcher.searchVariable(sql, i);
                 tokens.add(new KeywordToken(v));
-                i += v.length();
+                i += v.length() - 1;
                 continue;
             }
 
             // string
             if (c == '\'' || c == '`') {
-                String value = StringSearcher.extractLiteralString(sql, i);
+                String value = StringSearcher.searchLiteralString(sql, i);
                 if (value == null) {
                     throwWrongSyntax(size - 1);
                 }
                 tokens.add(new StringToken(value));
-                i += value.length();
+                i += value.length() + 1;
                 continue;
             }
 
             // number
             if (StringUtil.isNumberChar(c)) {
-                Pair<Integer, Boolean> pair = NumericSearcher.search(sql, i);
+                Pair<Integer, Boolean> pair = NumberSearcher.search(sql, i);
                 if (pair == null) {
                     throwWrongSyntax(size - 1);
                 }
-                String value = sql.substring(i + 1, pair.first());
+                String value = sql.substring(i, pair.first());
                 if (pair.second()) {
                     tokens.add(new FloatToken(value));
                 } else {
                     tokens.add(new IntegerToken(value));
                 }
-                i += value.length();
+                i += value.length() - 1;
                 continue;
             }
 
             PunctuationToken punctuationToken = PunctuationToken.search(c);
             if (punctuationToken != null) {
                 tokens.add(punctuationToken);
+                continue;
             } else {
                 // operator
                 Pair<OperatorToken, Integer> pair = OperatorToken.search(sql, i);
                 if (pair != null) {
                     tokens.add(pair.first());
                     i = pair.second();
+                    continue;
                 }
             }
 
