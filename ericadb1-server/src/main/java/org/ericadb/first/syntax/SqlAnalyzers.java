@@ -2,6 +2,7 @@ package org.ericadb.first.syntax;
 
 import java.util.Arrays;
 import java.util.List;
+import org.dreamcat.common.util.CollectionUtil;
 import org.ericadb.first.exception.EricaException;
 import org.ericadb.first.lexer.AbsLexToken;
 import org.ericadb.first.lexer.LexToken;
@@ -29,21 +30,8 @@ public final class SqlAnalyzers {
     }
 
     public static <T> T throwWrongSyntax(List<LexToken> tokens, int index) {
-        List<LexToken> sample;
-        int size = tokens.size();
-        if (size <= 3) {
-            sample = tokens;
-        } else if (index == size - 1) {
-            sample = tokens.subList(size - 3, size);
-        } else if (index == 0) {
-            sample = tokens.subList(0, 3);
-        } else {
-            sample = tokens.subList(index - 1, index + 2);
-        }
-        String s = AbsLexToken.getRawToken(sample);
-
-        throw new EricaException(
-                "You has wrong syntax in your SQL, near at: " + s);
+        throw new EricaException("You has wrong syntax in your SQL, near at: " +
+                AbsLexToken.getRawToken(CollectionUtil.sample(tokens, index, 2)));
     }
 
     public static LexToken getToken(List<LexToken> tokens, int index) {
