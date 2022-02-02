@@ -3,6 +3,7 @@ rootProject.name = 'ericadb1'
 def projects = [
         // EricaDB's first milestone
         'ericadb1-common',
+        'ericadb1-sql',
         'ericadb1-server',
         'ericadb1-jdbc',
         // // EricaDB's second milestone

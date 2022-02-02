@@ -3,6 +3,7 @@ package org.ericadb.first.common.result;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import org.dreamcat.common.function.ExFunction;
 import org.dreamcat.common.function.ExpFunction;
 import org.ericadb.first.common.type.EType;
 
@@ -38,7 +39,7 @@ public interface ResultObject {
         }
     };
 
-    ExpFunction<InputStream, ResultObject, IOException> NULL_READER = it -> NULL;
+    ExFunction<InputStream, ResultObject, IOException> NULL_READER = it -> NULL;
 
     ResultObject[] EMPTY_ARRAY = new ResultObject[0];
 }
