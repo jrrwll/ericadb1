@@ -7,19 +7,19 @@ import org.ericadb.first.sql.AbstractSqlObject;
 
 /**
  * @author Jerry Will
- * @since 2021-07-06
+ * @version 2022-02-01
  */
 @Getter
 @Setter
-public class AlterTableSqlObject extends AbstractSqlObject {
+public class CreateIndexSqlObject extends AbstractSqlObject  {
 
     String databaseName;
     String tableName;
-    List<ColumnDefinition> addColumnDefinitions;
-    List<ColumnDefinition> modifyColumnDefinitions;
-    List<String> dropColumns;
+    String indexName;
+    boolean unique;
+    List<String> columnNames;
 
-    public AlterTableSqlObject(String sql) {
+    public CreateIndexSqlObject(String sql) {
         super(sql);
     }
 }

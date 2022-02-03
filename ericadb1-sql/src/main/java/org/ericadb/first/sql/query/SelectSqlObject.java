@@ -12,6 +12,15 @@ import org.ericadb.first.sql.AbstractSqlObject;
 @Setter
 public class SelectSqlObject extends AbstractSqlObject {
 
+    String databaseName;
+    String tableName;
+
+    WhereSqlObject where;
+    GroupBySqlObject groupBy;
+    WhereSqlObject having;
+    int limitSize;
+    int limitOffset;
+
     public SelectSqlObject(String sql) {
         super(sql);
     }

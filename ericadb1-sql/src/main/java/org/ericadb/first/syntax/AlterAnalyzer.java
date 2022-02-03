@@ -11,22 +11,24 @@ import org.dreamcat.round.lex.RoundToken;
 import org.dreamcat.round.lex.TokenInfoStream;
 import org.ericadb.first.sql.SqlObject;
 import org.ericadb.first.sql.definition.CreateDatabaseSqlObject;
-import org.ericadb.first.sql.definition.DropDatabaseSqlObject;
 
 /**
  * @author Jerry Will
  * @since 2021-07-04
  */
-class DatabaseAnalyzer {
+class AlterAnalyzer {
 
     /**
-     * create if not exists database $databaseName
-     * create database $databaseName
+     * alter table $table (
+     *      add column ...,
+     *      modify column ...,
+     *      rename column
+     * )
      *
      * @param stream sql tokens
      * @return sql object
      */
-    static SqlObject analyseCreateDatabase(TokenInfoStream stream) {
+    static SqlObject analyseAlterTable(TokenInfoStream stream) {
         CreateDatabaseSqlObject sqlObject = new CreateDatabaseSqlObject(stream.getExpression());
         RoundToken token = stream.next();
         if (isKeyword(token, IF)) {
@@ -39,29 +41,6 @@ class DatabaseAnalyzer {
         }
         String name = getIdentifierOrBacktick(stream);
         sqlObject.setDatabaseName(name);
-        return sqlObject;
-    }
-
-    /**
-     * drop database if exists $databaseName
-     * drop database $databaseName
-     *
-     * @param stream sql tokens
-     * @return sql object
-     */
-    static SqlObject analyseDropDatabase(TokenInfoStream stream) {
-        DropDatabaseSqlObject sqlObject = new DropDatabaseSqlObject(stream.getExpression());
-
-        RoundToken token = stream.next();
-        if (isKeyword(token, IF)) {
-            if (isNotKeyword(stream.next(), EXISTS)) return stream.throwWrongSyntax();
-            sqlObject.setIfExists(true);
-        } else {
-            stream.previous();
-        }
-
-        String databaseName = getIdentifierOrBacktick(stream);
-        sqlObject.setDatabaseName(databaseName);
         return sqlObject;
     }
 }

@@ -2,6 +2,7 @@ package org.ericadb.first.syntax;
 
 import org.dreamcat.round.lex.TokenInfoStream;
 import org.ericadb.first.sql.SqlObject;
+import org.ericadb.first.sql.manipulation.UpdateSetSqlObject;
 
 /**
  * @author Jerry Will
@@ -10,6 +11,8 @@ import org.ericadb.first.sql.SqlObject;
 class UpdateSetAnalyzer {
 
     static SqlObject analyse(TokenInfoStream stream) {
-        return null;
+        UpdateSetSqlObject sqlObject = new UpdateSetSqlObject(stream.getExpression());
+
+        return sqlObject;
     }
 }

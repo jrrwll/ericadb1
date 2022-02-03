@@ -1,4 +1,4 @@
-package org.ericadb.first.sql.configuration;
+package org.ericadb.first.sql.definition;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,15 +6,16 @@ import org.ericadb.first.sql.AbstractSqlObject;
 
 /**
  * @author Jerry Will
- * @since 2021-07-05
+ * @version 2022-02-01
  */
 @Getter
 @Setter
-public class UseSqlObject extends AbstractSqlObject {
+public class DropViewSqlObject extends AbstractSqlObject {
 
     String databaseName;
+    String viewName;
 
-    public UseSqlObject(String sql) {
+    public DropViewSqlObject(String sql) {
         super(sql);
     }
 }

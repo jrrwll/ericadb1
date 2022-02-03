@@ -31,6 +31,12 @@ class Companion {
         return !isKeyword(token, keyword);
     }
 
+    static String getIdentifierOrBacktick(TokenInfoStream stream) {
+        String name = getIdentifierOrBacktick(stream.next());
+        if (name == null) return stream.throwWrongSyntax();
+        return name;
+    }
+
     static String getIdentifierOrBacktick(RoundToken token) {
         if (token.isIdentifier()) {
             return token.getIdentifier();
@@ -43,12 +49,12 @@ class Companion {
 
     static void analyseDatabaseAndTableName(
             TokenInfoStream stream, Consumer<String> databaseSetter, Consumer<String> tableSetter) {
-        String name = getIdentifierOrBacktick(stream.next());
+        String name = getIdentifierOrBacktick(stream);
         if (name == null) stream.throwWrongSyntax();
 
         if (stream.hasNext()) {
             if (stream.next().isDot()) {
-                String name2 = getIdentifierOrBacktick(stream.next());
+                String name2 = getIdentifierOrBacktick(stream);
                 databaseSetter.accept(name);
                 tableSetter.accept(name2);
                 return;

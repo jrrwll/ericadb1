@@ -45,7 +45,9 @@ class InsertIntoAnalyzer {
                         return stream.throwWrongSyntax();
                     } else needComma = false;
                 } else {
-                    sqlObject.getColumnNames().add(getIdentifierOrBacktick(token));
+                    String columnName = getIdentifierOrBacktick(token);
+                    if (columnName == null) return stream.throwWrongSyntax();
+                    sqlObject.getColumnNames().add(columnName);
                     needComma = true;
                 }
             }

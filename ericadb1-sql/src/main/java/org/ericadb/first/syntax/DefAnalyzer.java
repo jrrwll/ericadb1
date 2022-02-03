@@ -34,7 +34,7 @@ class DefAnalyzer {
 
     static ColumnDefinition analyseColumnDef(TokenInfoStream stream) {
         ColumnDefinition column = new ColumnDefinition();
-        column.setColumnName(getIdentifierOrBacktick(stream.next()));
+        column.setColumnName(getIdentifierOrBacktick(stream));
 
         // type
         EType type = EType.of(stream.next().getIdentifier());
@@ -123,8 +123,7 @@ class DefAnalyzer {
 
     static IndexDefinition analyseIndexDef(TokenInfoStream stream) {
         IndexDefinition index = new IndexDefinition();
-        String name = getIdentifierOrBacktick(stream.next());
-        if (name == null) return stream.throwWrongSyntax();
+        String name = getIdentifierOrBacktick(stream);
         index.setName(name);
         if (!stream.next().isLeftParenthesis()) return stream.throwWrongSyntax();
         List<String> columnNames = analyseColumnNames(stream);
@@ -133,12 +132,13 @@ class DefAnalyzer {
         return index;
     }
 
+    // c1, c2, c3
     static List<String> analyseColumnNames(TokenInfoStream stream) {
         List<String> columnNames = new ArrayList<>();
-        String columnName = getIdentifierOrBacktick(stream.next());
+        String columnName = getIdentifierOrBacktick(stream);
         columnNames.add(columnName);
         while (stream.next().isComma()) {
-            columnNames.add(getIdentifierOrBacktick(stream.next()));
+            columnNames.add(getIdentifierOrBacktick(stream));
         }
         stream.previous();
         return columnNames;

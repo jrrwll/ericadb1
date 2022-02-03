@@ -18,11 +18,10 @@ public class UpdateSetSqlObject extends AbstractSqlObject {
 
     String databaseName;
     String tableName;
-    List<Pair<String, Object>> sets;
+    List<Pair<String, Object>> sets = new ArrayList<>();
     WhereSqlObject where;
 
-    protected UpdateSetSqlObject(String sql) {
+    public UpdateSetSqlObject(String sql) {
         super(sql);
-        this.sets = new ArrayList<>();
     }
 }

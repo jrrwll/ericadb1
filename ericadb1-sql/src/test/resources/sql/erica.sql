@@ -18,11 +18,20 @@ create table jerry (
     key ix_name_word (name, `word`)
 ) engine = innodb default charset = utf8mb4 comment ='some table';
 
+drop index uk_code on jerry;
+
+create unique index `uk_code` on will.jerry (code);
+
+alter table jerry
+rename column word to word2;
+
 select *
 from jerry;
 
 select word, id
 from jerry;
+
+select id, age * (age - 1) as age from will.jerry;
 
 select word
 from jerry

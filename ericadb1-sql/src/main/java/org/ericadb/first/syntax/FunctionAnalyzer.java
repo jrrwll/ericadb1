@@ -17,16 +17,16 @@ import org.ericadb.first.sql.definition.DropDatabaseSqlObject;
  * @author Jerry Will
  * @since 2021-07-04
  */
-class DatabaseAnalyzer {
+class FunctionAnalyzer {
 
     /**
-     * create if not exists database $databaseName
-     * create database $databaseName
+     * create if not exists function $databaseName as ...
+     * create function $databaseName as ...
      *
      * @param stream sql tokens
      * @return sql object
      */
-    static SqlObject analyseCreateDatabase(TokenInfoStream stream) {
+    static SqlObject analyseCreateFunction(TokenInfoStream stream) {
         CreateDatabaseSqlObject sqlObject = new CreateDatabaseSqlObject(stream.getExpression());
         RoundToken token = stream.next();
         if (isKeyword(token, IF)) {
@@ -43,13 +43,13 @@ class DatabaseAnalyzer {
     }
 
     /**
-     * drop database if exists $databaseName
-     * drop database $databaseName
+     * drop function if exists $databaseName
+     * drop function $databaseName
      *
      * @param stream sql tokens
      * @return sql object
      */
-    static SqlObject analyseDropDatabase(TokenInfoStream stream) {
+    static SqlObject analyseDropFunction(TokenInfoStream stream) {
         DropDatabaseSqlObject sqlObject = new DropDatabaseSqlObject(stream.getExpression());
 
         RoundToken token = stream.next();

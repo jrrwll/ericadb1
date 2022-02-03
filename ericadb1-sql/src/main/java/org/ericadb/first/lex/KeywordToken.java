@@ -38,6 +38,7 @@ public interface KeywordToken {
     IdentifierToken EXISTS = IdentifierToken.addKeywords("exists", "EXISTS");
 
     IdentifierToken FROM = IdentifierToken.addKeywords("from", "FROM");
+    IdentifierToken FUNCTION = IdentifierToken.addKeywords("function", "FUNCTION");
 
     IdentifierToken GROUP = IdentifierToken.addKeywords("group", "GROUP");
 
