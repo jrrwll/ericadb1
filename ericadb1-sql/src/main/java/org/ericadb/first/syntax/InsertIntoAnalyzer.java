@@ -3,9 +3,10 @@ package org.ericadb.first.syntax;
 import static org.dreamcat.round.lex.PunctuationToken.COMMA;
 import static org.dreamcat.round.lex.PunctuationToken.LEFT_PARENTHESIS;
 import static org.dreamcat.round.lex.PunctuationToken.RIGHT_PARENTHESIS;
+import static org.dreamcat.round.lex.PunctuationToken.SEMICOLON;
 import static org.ericadb.first.lex.KeywordToken.VALUES;
 import static org.ericadb.first.syntax.Companion.EMPTY_ARRAY;
-import static org.ericadb.first.syntax.Companion.getChainName;
+import static org.ericadb.first.syntax.Companion.analyseDatabaseAndTableName;
 import static org.ericadb.first.syntax.Companion.getIdentifierOrBacktick;
 import static org.ericadb.first.syntax.Companion.isNotKeyword;
 
@@ -32,13 +33,8 @@ class InsertIntoAnalyzer {
         InsertIntoSqlObject sqlObject = new InsertIntoSqlObject(stream.getExpression());
 
         // $databaseName.$tableName
-        String[] names = getChainName(stream);
-        if (names.length > 1) {
-            sqlObject.setDatabaseName(names[0]);
-            sqlObject.setTableName(names[1]);
-        } else {
-            sqlObject.setTableName(names[0]);
-        }
+        analyseDatabaseAndTableName(stream,
+                sqlObject::setDatabaseName, sqlObject::setTableName);
 
         RoundToken token = stream.next();
         if (LEFT_PARENTHESIS.equals(token)) {
@@ -53,9 +49,9 @@ class InsertIntoAnalyzer {
                     needComma = true;
                 }
             }
+            token = stream.next();
         }
 
-        token = stream.next();
         if (isNotKeyword(token, VALUES)) return stream.throwWrongSyntax();
 
         token = stream.next();
@@ -99,10 +95,13 @@ class InsertIntoAnalyzer {
 
                 if (stream.hasNext()) {
                     token = stream.next();
-                    if (!COMMA.equals(token)) {
-                        return stream.throwWrongSyntax();
-                    } else {
+
+                    if (COMMA.equals(token)) {
                         token = stream.next();
+                    } else if (SEMICOLON.equals(token)) {
+                        break;
+                    } else {
+                        return stream.throwWrongSyntax();
                     }
                 } else {
                     break;

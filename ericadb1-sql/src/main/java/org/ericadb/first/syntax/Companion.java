@@ -5,6 +5,7 @@ import static org.ericadb.first.lex.KeywordToken.KEY;
 import static org.ericadb.first.lex.KeywordToken.PRIMARY;
 import static org.ericadb.first.lex.KeywordToken.UNIQUE;
 
+import java.util.function.Consumer;
 import org.dreamcat.round.lex.IdentifierToken;
 import org.dreamcat.round.lex.RoundToken;
 import org.dreamcat.round.lex.StringToken;
@@ -27,7 +28,7 @@ class Companion {
     }
 
     static boolean isNotKeyword(RoundToken token, IdentifierToken keyword) {
-        return isKeyword(token, keyword);
+        return !isKeyword(token, keyword);
     }
 
     static String getIdentifierOrBacktick(RoundToken token) {
@@ -40,16 +41,18 @@ class Companion {
         }
     }
 
-    static String[] getChainName(TokenInfoStream stream) {
+    static void analyseDatabaseAndTableName(
+            TokenInfoStream stream, Consumer<String> databaseSetter, Consumer<String> tableSetter) {
         String name = getIdentifierOrBacktick(stream.next());
         if (name == null) stream.throwWrongSyntax();
 
         if (stream.next().isDot()) {
             String name2 = getIdentifierOrBacktick(stream.next());
-            return new String[]{name, name2};
+            databaseSetter.accept(name);
+            tableSetter.accept(name2);
         } else {
             stream.previous();
-            return new String[]{name};
+            tableSetter.accept(name);
         }
     }
 

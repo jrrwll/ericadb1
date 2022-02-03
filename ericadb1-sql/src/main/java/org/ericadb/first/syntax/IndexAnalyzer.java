@@ -31,4 +31,7 @@ class IndexAnalyzer {
         return null;
     }
 
+    static SqlObject analyseDropIndex(TokenInfoStream stream) {
+        return null;
+    }
 }

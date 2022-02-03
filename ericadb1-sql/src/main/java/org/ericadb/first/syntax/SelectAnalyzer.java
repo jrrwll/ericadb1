@@ -7,7 +7,7 @@ import org.ericadb.first.sql.SqlObject;
  * @author Jerry Will
  * @version 2021-07-22
  */
- class UpdateSetSqlAnalyzer {
+ class SelectAnalyzer {
 
     static SqlObject analyse(TokenInfoStream stream) {
         return null;

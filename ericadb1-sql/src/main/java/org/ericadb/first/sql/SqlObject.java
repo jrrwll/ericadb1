@@ -14,13 +14,13 @@ import org.ericadb.first.syntax.SqlAnalyzer;
  */
 public interface SqlObject {
 
-    static List<SqlObject> compile(String sql) {
+    static List<SqlObject> analyse(String sql) {
         SqlLexSettings lexSettings = new SqlLexSettings();
         Lexer lexer = new Lexer(lexSettings);
         List<TokenInfoStream> streams = lexer.lex(sql).split(PunctuationToken.SEMICOLON);
         List<SqlObject> sqlObjects = new ArrayList<>(streams.size());
         for (TokenInfoStream stream : streams) {
-            sqlObjects.add(SqlAnalyzer.syntax(stream));
+            sqlObjects.add(SqlAnalyzer.analyse(stream));
         }
         return sqlObjects;
     }

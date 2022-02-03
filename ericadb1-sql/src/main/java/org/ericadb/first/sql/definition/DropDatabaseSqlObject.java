@@ -15,9 +15,7 @@ public class DropDatabaseSqlObject extends AbstractSqlObject {
     String databaseName;
     boolean ifExists;
 
-    public DropDatabaseSqlObject(String sql, String databaseName, boolean ifExists) {
+    public DropDatabaseSqlObject(String sql) {
         super(sql);
-        this.databaseName = databaseName;
-        this.ifExists = ifExists;
     }
 }

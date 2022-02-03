@@ -11,6 +11,7 @@ import org.dreamcat.round.lex.RoundToken;
 import org.dreamcat.round.lex.TokenInfoStream;
 import org.ericadb.first.sql.SqlObject;
 import org.ericadb.first.sql.definition.CreateDatabaseSqlObject;
+import org.ericadb.first.sql.definition.DropDatabaseSqlObject;
 
 /**
  * @author Jerry Will
@@ -40,4 +41,25 @@ class DatabaseAnalyzer {
         return sqlObject;
     }
 
+    /**
+     * drop database if exists $databaseName
+     * drop database $databaseName
+     *
+     * @param stream sql tokens
+     * @return sql object
+     */
+    static SqlObject analyseDropDatabase(TokenInfoStream stream) {
+        DropDatabaseSqlObject sqlObject = new DropDatabaseSqlObject(stream.getExpression());
+
+        RoundToken token = stream.next();
+        if (isKeyword(token, IF)) {
+            if (isNotKeyword(token, EXISTS)) return stream.throwWrongSyntax();
+            sqlObject.setIfExists(true);
+            token = stream.next();
+        }
+
+        String databaseName = getIdentifierOrBacktick(token);
+        sqlObject.setDatabaseName(databaseName);
+        return sqlObject;
+    }
 }

@@ -7,9 +7,9 @@ import org.ericadb.first.sql.SqlObject;
  * @author Jerry Will
  * @version 2021-07-22
  */
-public class DeleteFromSqlAnalyzer {
+ class UpdateSetAnalyzer {
 
-    static SqlObject analyse(TokenInfoStream lexTokens) {
+    static SqlObject analyse(TokenInfoStream stream) {
         return null;
     }
 }

@@ -10,6 +10,7 @@ import org.dreamcat.round.lex.TokenInfoStream;
 import org.ericadb.first.sql.SqlObject;
 import org.ericadb.first.sql.definition.ColumnDefinition;
 import org.ericadb.first.sql.definition.CreateTableSqlObject;
+import org.ericadb.first.sql.definition.DropTableSqlObject;
 import org.ericadb.first.sql.definition.IndexDefinition;
 
 /**
@@ -40,13 +41,9 @@ class TableAnalyzer {
         }
 
         // $databaseName.$tableName
-        String[] names = getChainName(stream);
-        if (names.length > 1) {
-            sqlObject.setDatabaseName(names[0]);
-            sqlObject.setTableName(names[1]);
-        } else {
-            sqlObject.setTableName(names[0]);
-        }
+        analyseDatabaseAndTableName(stream,
+                sqlObject::setDatabaseName, sqlObject::setTableName);
+
         if (!stream.next().isLeftParenthesis()) stream.throwWrongSyntax();
 
         // column
@@ -100,10 +97,31 @@ class TableAnalyzer {
         return sqlObject;
     }
 
-    public static SqlObject analyseCreateIndex(TokenInfoStream stream) {
-        return null;
+    /**
+     * drop table $tableName
+     * drop table if exists $tableName
+     * <p>
+     * drop table $databaseName.$tableName
+     * drop table if exists $databaseName.$tableName
+     *
+     * @param stream sql tokens
+     * @return sql object
+     */
+    static SqlObject analyseDropTable(TokenInfoStream stream) {
+        DropTableSqlObject sqlObject = new DropTableSqlObject(stream.getExpression());
+
+        RoundToken token = stream.next();
+        if (isKeyword(token, IF)) {
+            if (isNotKeyword(token, EXISTS)) return stream.throwWrongSyntax();
+            sqlObject.setIfExists(true);
+            stream.next();
+        }
+
+        // $databaseName.$tableName
+        analyseDatabaseAndTableName(stream,
+                sqlObject::setDatabaseName, sqlObject::setTableName);
+
+        return sqlObject;
     }
-
-
 
 }
