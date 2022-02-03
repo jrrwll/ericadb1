@@ -1,6 +1,20 @@
 package org.ericadb.first.syntax;
 
-import static org.ericadb.first.lex.KeywordToken.*;
+import static org.ericadb.first.lex.KeywordToken.ALTER;
+import static org.ericadb.first.lex.KeywordToken.CREATE;
+import static org.ericadb.first.lex.KeywordToken.DATABASE;
+import static org.ericadb.first.lex.KeywordToken.DELETE;
+import static org.ericadb.first.lex.KeywordToken.DROP;
+import static org.ericadb.first.lex.KeywordToken.FROM;
+import static org.ericadb.first.lex.KeywordToken.INDEX;
+import static org.ericadb.first.lex.KeywordToken.INSERT;
+import static org.ericadb.first.lex.KeywordToken.INTO;
+import static org.ericadb.first.lex.KeywordToken.OR;
+import static org.ericadb.first.lex.KeywordToken.REPLACE;
+import static org.ericadb.first.lex.KeywordToken.SELECT;
+import static org.ericadb.first.lex.KeywordToken.TABLE;
+import static org.ericadb.first.lex.KeywordToken.UPDATE;
+import static org.ericadb.first.lex.KeywordToken.USE;
 import static org.ericadb.first.syntax.Companion.isKeyword;
 import static org.ericadb.first.syntax.Companion.isNotKeyword;
 

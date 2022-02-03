@@ -1,8 +1,11 @@
 package org.ericadb.first;
 
+import org.dreamcat.common.x.jackson.JsonUtil;
 import org.dreamcat.round.lex.Lexer;
 import org.dreamcat.round.lex.TokenInfoStream;
 import org.ericadb.first.lex.SqlLexSettings;
+import org.ericadb.first.sql.SqlObject;
+import org.ericadb.first.syntax.SqlAnalyzer;
 
 /**
  * @author Jerry Will
@@ -14,6 +17,11 @@ public class TestBase {
 
     public TokenInfoStream lex(String sql) {
         return sqlLexer.lex(sql);
+    }
+
+    public void analyse(String sql) {
+        SqlObject sqlObject = SqlAnalyzer.analyse(lex(sql));
+        System.out.println(JsonUtil.toJson(sqlObject));
     }
 
 }

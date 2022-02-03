@@ -3,7 +3,6 @@ package org.ericadb.first.sql.definition;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.ericadb.first.type.EType;
 
 /**
  * @author Jerry Will
@@ -19,4 +18,7 @@ public class ColumnDefinition {
     TypeDefinition type;
     boolean notNull;
     Object defaultValue;
+    boolean autoIncrement;
+    String onUpdate;
+    String comment;
 }

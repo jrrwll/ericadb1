@@ -14,11 +14,13 @@ public interface KeywordToken {
     IdentifierToken ANY = IdentifierToken.addKeywords("any", "ANY");
     IdentifierToken AS = IdentifierToken.addKeywords("as", "AS");
     IdentifierToken ASC = IdentifierToken.addKeywords("asc", "ASC");
+    IdentifierToken AUTO_INCREMENT = IdentifierToken.addKeywords("auto_increment", "AUTO_INCREMENT");
 
     IdentifierToken BETWEEN = IdentifierToken.addKeywords("between", "BETWEEN");
     IdentifierToken BY = IdentifierToken.addKeywords("by", "BY");
 
     IdentifierToken CASE = IdentifierToken.addKeywords("case", "CASE");
+    IdentifierToken CHARSET = IdentifierToken.addKeywords("charset", "CHARSET");
     IdentifierToken COMMENT = IdentifierToken.addKeywords("comment", "COMMENT");
     IdentifierToken COLUMN = IdentifierToken.addKeywords("column", "COLUMN");
     IdentifierToken CREATE = IdentifierToken.addKeywords("create", "CREATE");
@@ -32,6 +34,7 @@ public interface KeywordToken {
     IdentifierToken DROP = IdentifierToken.addKeywords("drop", "DROP");
 
     IdentifierToken ELSE = IdentifierToken.addKeywords("else", "ELSE");
+    IdentifierToken ENGINE = IdentifierToken.addKeywords("engine", "ENGINE");
     IdentifierToken EXISTS = IdentifierToken.addKeywords("exists", "EXISTS");
 
     IdentifierToken FROM = IdentifierToken.addKeywords("from", "FROM");

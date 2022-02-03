@@ -1,8 +1,16 @@
 package org.ericadb.first.syntax;
 
-
-import static org.ericadb.first.lex.KeywordToken.*;
-import static org.ericadb.first.syntax.Companion.*;
+import static org.ericadb.first.lex.KeywordToken.EXISTS;
+import static org.ericadb.first.lex.KeywordToken.IF;
+import static org.ericadb.first.lex.KeywordToken.INDEX;
+import static org.ericadb.first.lex.KeywordToken.KEY;
+import static org.ericadb.first.lex.KeywordToken.NOT;
+import static org.ericadb.first.lex.KeywordToken.PRIMARY;
+import static org.ericadb.first.lex.KeywordToken.UNIQUE;
+import static org.ericadb.first.syntax.Companion.analyseDatabaseAndTableName;
+import static org.ericadb.first.syntax.Companion.isIndexDefStartToken;
+import static org.ericadb.first.syntax.Companion.isKeyword;
+import static org.ericadb.first.syntax.Companion.isNotKeyword;
 
 import java.util.List;
 import org.dreamcat.round.lex.RoundToken;
@@ -37,7 +45,8 @@ class TableAnalyzer {
                 return stream.throwWrongSyntax();
             }
             sqlObject.setIfNotExists(true);
-            stream.next();
+        } else {
+            stream.previous();
         }
 
         // $databaseName.$tableName
@@ -50,29 +59,29 @@ class TableAnalyzer {
         boolean defEnd = false;
         token = stream.next();
         if (isIndexDefStartToken(token)) return stream.throwWrongSyntax();
-        for (;;) {
+        else stream.previous();
+        for (; ; ) {
             ColumnDefinition column = DefAnalyzer.analyseColumnDef(stream);
             sqlObject.getColumnDefinitions().add(column);
             token = stream.next();
             if (token.isRightParenthesis()) {
                 defEnd = true;
                 break;
-            } else if (!token.isComma()){
+            } else if (!token.isComma()) {
                 return stream.throwWrongSyntax();
             }
-            token = stream.next();
+            token = stream.get();
             if (isIndexDefStartToken(token)) break;
         }
 
         if (!defEnd) {
-            token = stream.next();
-            for (;;) {
+            for (; ; ) {
+                token = stream.next();
                 if (isKeyword(token, PRIMARY)) {
                     if (sqlObject.getPrimaryColumnNames() != null) {
-                        stream.previous();
                         return stream.throwWrongSyntax();
                     }
-                    if (isNotKeyword(token, KEY) && !stream.next().isLeftParenthesis()) {
+                    if (isNotKeyword(stream.next(), KEY) || !stream.next().isLeftParenthesis()) {
                         return stream.throwWrongSyntax();
                     }
                     List<String> columnNames = DefAnalyzer.analyseColumnNames(stream);
@@ -91,9 +100,17 @@ class TableAnalyzer {
                 } else {
                     return stream.throwWrongSyntax();
                 }
+                if (!stream.next().isComma()) {
+                    stream.previous();
+                    break;
+                }
             }
         }
-        stream.next();
+        if (!stream.next().isRightParenthesis()) return stream.throwWrongSyntax();
+        // table props
+        if (stream.hasNext()) {
+            DefAnalyzer.analyseTableProps(stream, sqlObject);
+        }
         return sqlObject;
     }
 
@@ -112,9 +129,10 @@ class TableAnalyzer {
 
         RoundToken token = stream.next();
         if (isKeyword(token, IF)) {
-            if (isNotKeyword(token, EXISTS)) return stream.throwWrongSyntax();
+            if (isNotKeyword(stream.next(), EXISTS)) return stream.throwWrongSyntax();
             sqlObject.setIfExists(true);
-            stream.next();
+        } else {
+            stream.previous();
         }
 
         // $databaseName.$tableName

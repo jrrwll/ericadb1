@@ -1,6 +1,12 @@
 package org.ericadb.first.type;
 
 import java.sql.JDBCType;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Jerry Will
@@ -25,10 +31,18 @@ public enum EType {
     FLOAT64(JDBCType.DOUBLE, Double.class, "f64", "float64", "double"),
 
     // text
-    TEXT(JDBCType.VARCHAR, String.class, "string", "text"),
+    CHAR(JDBCType.CHAR, String.class, "char"),
+    VARCHAR(JDBCType.VARCHAR, String.class, "varchar"),
+    TEXT(JDBCType.LONGVARCHAR, String.class, "string", "text"),
 
     // binary
     BINARY(JDBCType.BINARY, byte[].class, "binary"),
+    BIT(JDBCType.BIT, byte[].class, "bit"),
+
+    // datetime
+    TIMESTAMP(JDBCType.TIMESTAMP, Date.class, "timestamp"),
+    DATE(JDBCType.DATE, LocalDate.class, "date"),
+    TIME(JDBCType.TIME, LocalTime.class, "time"),
     ;
 
     final JDBCType jdbcType;
@@ -39,5 +53,20 @@ public enum EType {
         this.jdbcType = jdbcType;
         this.javaType = javaType;
         this.alias = alias;
+    }
+
+    public static EType of(String alias) {
+        return valueMap.get(alias);
+    }
+
+    private static final Map<String, EType> valueMap = new HashMap<>();
+
+    static {
+        for (EType type : values()) {
+            for (String alias : type.alias) {
+                valueMap.put(alias, type);
+
+            }
+        }
     }
 }

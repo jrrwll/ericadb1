@@ -46,14 +46,39 @@ class Companion {
         String name = getIdentifierOrBacktick(stream.next());
         if (name == null) stream.throwWrongSyntax();
 
-        if (stream.next().isDot()) {
-            String name2 = getIdentifierOrBacktick(stream.next());
-            databaseSetter.accept(name);
-            tableSetter.accept(name2);
-        } else {
-            stream.previous();
-            tableSetter.accept(name);
+        if (stream.hasNext()) {
+            if (stream.next().isDot()) {
+                String name2 = getIdentifierOrBacktick(stream.next());
+                databaseSetter.accept(name);
+                tableSetter.accept(name2);
+                return;
+            } else {
+                stream.previous();
+            }
         }
+        tableSetter.accept(name);
+    }
+
+    static Number getNumber(TokenInfoStream stream) {
+        RoundToken token = stream.next();
+        if (token.isValue()) {
+            Object v = token.getValue();
+            if (v instanceof Number) {
+                return (Number) v;
+            }
+        }
+        return stream.throwWrongSyntax();
+    }
+
+    static String getString(TokenInfoStream stream) {
+        RoundToken token = stream.next();
+        if (token.isValue()) {
+            Object v = token.getValue();
+            if (v instanceof String) {
+                return (String) v;
+            }
+        }
+        return stream.throwWrongSyntax();
     }
 
     static boolean isIndexDefStartToken(RoundToken token) {

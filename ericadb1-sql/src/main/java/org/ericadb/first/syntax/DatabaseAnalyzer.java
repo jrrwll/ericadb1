@@ -53,7 +53,7 @@ class DatabaseAnalyzer {
 
         RoundToken token = stream.next();
         if (isKeyword(token, IF)) {
-            if (isNotKeyword(token, EXISTS)) return stream.throwWrongSyntax();
+            if (isNotKeyword(stream.next(), EXISTS)) return stream.throwWrongSyntax();
             sqlObject.setIfExists(true);
             token = stream.next();
         }

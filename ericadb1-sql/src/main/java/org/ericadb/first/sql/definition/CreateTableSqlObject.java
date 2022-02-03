@@ -17,9 +17,14 @@ public class CreateTableSqlObject extends AbstractSqlObject {
     String databaseName;
     String tableName;
     boolean ifNotExists;
+    // sub item
     List<String> primaryColumnNames;
     List<ColumnDefinition> columnDefinitions = new ArrayList<>();
     List<IndexDefinition> indexDefinitions = new ArrayList<>();
+    // props
+    String engine;
+    String defaultCharset;
+    String comment;
 
     public CreateTableSqlObject(String sql) {
         super(sql);
