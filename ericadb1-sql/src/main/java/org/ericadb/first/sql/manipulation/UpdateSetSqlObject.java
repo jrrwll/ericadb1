@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.dreamcat.common.Pair;
 import org.ericadb.first.sql.AbstractSqlObject;
-import org.ericadb.first.sql.query.WhereSqlObject;
+import org.ericadb.first.sql.query.WhereObject;
 
 /**
  * @author Jerry Will
@@ -19,7 +19,7 @@ public class UpdateSetSqlObject extends AbstractSqlObject {
     String databaseName;
     String tableName;
     List<Pair<String, Object>> sets = new ArrayList<>();
-    WhereSqlObject where;
+    WhereObject where;
 
     public UpdateSetSqlObject(String sql) {
         super(sql);

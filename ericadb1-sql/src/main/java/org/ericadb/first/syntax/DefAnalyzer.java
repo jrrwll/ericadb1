@@ -23,7 +23,7 @@ import org.dreamcat.round.lex.TokenInfoStream;
 import org.ericadb.first.sql.definition.ColumnDefinition;
 import org.ericadb.first.sql.definition.CreateTableSqlObject;
 import org.ericadb.first.sql.definition.IndexDefinition;
-import org.ericadb.first.sql.definition.TypeDefinition;
+import org.ericadb.first.sql.definition.TypeObject;
 import org.ericadb.first.type.EType;
 
 /**
@@ -39,8 +39,8 @@ class DefAnalyzer {
         // type
         EType type = EType.of(stream.next().getIdentifier());
         if (type == null) return stream.throwWrongSyntax();
-        TypeDefinition typeDef = new TypeDefinition();
-        typeDef.setType(type);
+        TypeObject typeObject = new TypeObject();
+        typeObject.setType(type);
         if (stream.next().isLeftParenthesis()) {
             List<Integer> typeArgs = new ArrayList<>();
             typeArgs.add(getNumber(stream).intValue());
@@ -49,11 +49,11 @@ class DefAnalyzer {
             }
             stream.previous();
             if (!stream.next().isRightParenthesis()) return stream.throwWrongSyntax();
-            typeDef.setTypeArgs(typeArgs.stream().mapToInt(Number::intValue).toArray());
+            typeObject.setTypeArgs(typeArgs.stream().mapToInt(Number::intValue).toArray());
         } else {
             stream.previous();
         }
-        column.setType(typeDef);
+        column.setType(typeObject);
 
         int flag = 0;
         while (!stream.next().isComma()) {

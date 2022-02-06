@@ -1,9 +1,7 @@
 package org.ericadb.first.syntax;
 
 import org.dreamcat.round.lex.TokenInfoStream;
-import org.ericadb.first.sql.SqlObject;
-import org.ericadb.first.sql.manipulation.DeleteFromSqlObject;
-import org.ericadb.first.sql.query.WhereSqlObject;
+import org.ericadb.first.sql.query.WhereObject;
 
 /**
  * @author Jerry Will
@@ -11,8 +9,8 @@ import org.ericadb.first.sql.query.WhereSqlObject;
  */
 public class WhereAnalyzer {
 
-    static WhereSqlObject analyse(TokenInfoStream stream) {
-        WhereSqlObject sqlObject = new WhereSqlObject();
+    static WhereObject analyse(TokenInfoStream stream) {
+        WhereObject sqlObject = new WhereObject();
 
         return sqlObject;
     }

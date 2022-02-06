@@ -2,8 +2,8 @@ package org.ericadb.first.sql.query;
 
 /**
  * @author Jerry Will
- * @version 2022-01-31
+ * @version 2022-02-03
  */
-public class GroupBySqlObject {
+public class ElObject {
 
 }

@@ -12,7 +12,7 @@ import org.ericadb.first.type.EType;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TypeDefinition {
+public class TypeObject {
 
     EType type;
     int[] typeArgs; // example: `int[]` for `decimal`, `int` for `varchar`

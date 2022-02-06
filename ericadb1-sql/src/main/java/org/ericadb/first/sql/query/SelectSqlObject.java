@@ -1,5 +1,6 @@
 package org.ericadb.first.sql.query;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.ericadb.first.sql.AbstractSqlObject;
@@ -12,14 +13,16 @@ import org.ericadb.first.sql.AbstractSqlObject;
 @Setter
 public class SelectSqlObject extends AbstractSqlObject {
 
-    String databaseName;
-    String tableName;
+    List<ColumnObject> columns; // selected columns;
+    List<FromObject> from;
+    List<JoinObject> join; // from.size() - join.size() == 1
 
-    WhereSqlObject where;
-    GroupBySqlObject groupBy;
-    WhereSqlObject having;
-    int limitSize;
-    int limitOffset;
+    WhereObject where;
+    GroupByObject groupBy;
+    OrderByObject orderBy;
+    LimitObject limit;
+
+    List<SelectSqlObject> union;
 
     public SelectSqlObject(String sql) {
         super(sql);

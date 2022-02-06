@@ -15,7 +15,7 @@ public class ColumnDefinition {
 
     int index;
     String columnName;
-    TypeDefinition type;
+    TypeObject type;
     boolean notNull;
     Object defaultValue;
     boolean autoIncrement;
