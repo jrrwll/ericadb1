@@ -3,7 +3,7 @@ package org.ericadb.first.sql.manipulation;
 import lombok.Getter;
 import lombok.Setter;
 import org.ericadb.first.sql.AbstractSqlObject;
-import org.ericadb.first.sql.query.WhereObject;
+import org.ericadb.first.sql.el.ElObject;
 
 /**
  * @author Jerry Will
@@ -15,7 +15,7 @@ public class DeleteFromSqlObject extends AbstractSqlObject {
 
     String databaseName;
     String tableName;
-    WhereObject where;
+    ElObject where;
 
     public DeleteFromSqlObject(String sql) {
         super(sql);

@@ -1,7 +1,7 @@
 package org.ericadb.first.syntax;
 
 import org.dreamcat.round.lex.TokenInfoStream;
-import org.ericadb.first.sql.query.WhereObject;
+import org.ericadb.first.sql.el.ElObject;
 
 /**
  * @author Jerry Will
@@ -9,9 +9,9 @@ import org.ericadb.first.sql.query.WhereObject;
  */
 public class WhereAnalyzer {
 
-    static WhereObject analyse(TokenInfoStream stream) {
-        WhereObject sqlObject = new WhereObject();
+    static ElObject analyse(TokenInfoStream stream) {
+        ElObject elObject = new ElObject();
 
-        return sqlObject;
+        return elObject;
     }
 }

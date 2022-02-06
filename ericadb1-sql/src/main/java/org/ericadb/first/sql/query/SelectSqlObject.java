@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.ericadb.first.sql.AbstractSqlObject;
+import org.ericadb.first.sql.el.ElObject;
 
 /**
  * @author Jerry Will
@@ -17,7 +18,7 @@ public class SelectSqlObject extends AbstractSqlObject {
     List<FromObject> from;
     List<JoinObject> join; // from.size() - join.size() == 1
 
-    WhereObject where;
+    ElObject where;
     GroupByObject groupBy;
     OrderByObject orderBy;
     LimitObject limit;

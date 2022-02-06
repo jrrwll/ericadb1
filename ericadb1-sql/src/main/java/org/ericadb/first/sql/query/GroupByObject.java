@@ -3,6 +3,7 @@ package org.ericadb.first.sql.query;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+import org.ericadb.first.sql.el.ElObject;
 
 /**
  * @author Jerry Will
@@ -13,5 +14,5 @@ import lombok.Setter;
 public class GroupByObject {
 
     List<ElObject> columns;
-    WhereObject having;
+    ElObject having;
 }
