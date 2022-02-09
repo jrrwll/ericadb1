@@ -14,7 +14,7 @@ public class ElObject {
 
     private final List<ElObject> children = new ArrayList<>();
 
-    public static ElObject of(ElNode root) {
-
+    public ElObject of(ElNode root) {
+        System.out.println(root); // todo impl
     }
 }

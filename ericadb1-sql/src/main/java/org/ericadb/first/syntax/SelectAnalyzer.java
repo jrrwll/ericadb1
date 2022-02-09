@@ -16,6 +16,9 @@ class SelectAnalyzer {
         SelectSqlObject sqlObject = new SelectSqlObject(stream.getExpression());
         ElNode node = SnippetAnalyzer.analyse(stream);
 
+        while (stream.next().isComma()) {
+            node = SnippetAnalyzer.analyse(stream);
+        }
         return sqlObject;
     }
 }

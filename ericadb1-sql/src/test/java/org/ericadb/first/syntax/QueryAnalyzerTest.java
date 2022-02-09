@@ -11,12 +11,14 @@ import org.junit.jupiter.api.Test;
 
     @Test
     void select() {
-        analyse("select * from jerry");
-        analyse("select * from jerry;");
-        analyse("select * from will.jerry;");
+        // analyse("select * from jerry");
+        // analyse("select * from jerry;");
+        // analyse("select * from will.jerry;");
+        //
+        // analyse("select id, name as jerry_name from will.jerry;");
+        // analyse("select id, name as jerry_name from will.jerry;");
+        // analyse("select id, concat(',', name, ',') as jerry_name from will.jerry;");
 
-        analyse("select id, name as jerry_name from will.jerry;");
-        analyse("select id, name as jerry_name from will.jerry;");
-
+        analyse("select age * (age - 1) as age from will.jerry;");
     }
 }

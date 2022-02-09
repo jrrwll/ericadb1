@@ -3,7 +3,7 @@ package org.ericadb.first.common.type;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.JDBCType;
-import org.dreamcat.common.function.ExpFunction;
+import org.dreamcat.common.function.ExFunction;
 import org.ericadb.first.common.result.BinaryResultObject;
 import org.ericadb.first.common.result.BoolResultObject;
 import org.ericadb.first.common.result.Float32ResultObject;
@@ -56,11 +56,11 @@ public enum EType {
 
     final JDBCType jdbcType;
     final Class<?> javaType;
-    final ExpFunction<InputStream, ResultObject, IOException> reader;
+    final ExFunction<InputStream, ResultObject, IOException> reader;
     final String[] alias;
 
     EType(JDBCType jdbcType, Class<?> javaType,
-            ExpFunction<InputStream, ResultObject, IOException> reader, String... alias) {
+            ExFunction<InputStream, ResultObject, IOException> reader, String... alias) {
         this.jdbcType = jdbcType;
         this.javaType = javaType;
         this.reader = reader;
